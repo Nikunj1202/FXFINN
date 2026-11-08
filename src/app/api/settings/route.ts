@@ -1,0 +1,7 @@
+import {NextRequest,NextResponse} from 'next/server';
+import {authContext,audit,serverError,validationError} from '@/lib/api';
+import {z} from 'zod';
+const validTimezone = (value: string) => { try { Intl.DateTimeFormat('en-US', { timeZone: value }); return true; } catch { return false; } };
+const schema=z.object({full_name:z.string().max(100).optional(),currency:z.string().length(3).regex(/^[A-Z]{3}$/).optional(),timezone:z.string().max(80).refine(validTimezone,'Use a valid IANA time zone.').optional(),theme:z.enum(['light','dark','system']).optional()});
+export async function GET(){const {supabase,user,response}=await authContext();if(response||!user)return response!;const {data,error}=await supabase.from('profiles').select('*').eq('id',user.id).maybeSingle();if(error)return serverError('Unable to load profile.');return NextResponse.json({profile:data,email:user.email});}
+export async function PATCH(req:NextRequest){const {supabase,user,response}=await authContext();if(response||!user)return response!;const parsed=schema.safeParse(await req.json().catch(()=>null));if(!parsed.success)return validationError('Check your settings.',parsed.error.flatten());const {data,error}=await supabase.from('profiles').upsert({id:user.id,...parsed.data}).select('*').single();if(error)return validationError('Could not save settings.');await audit(supabase,user.id,'profile.updated','profile');return NextResponse.json(data);}

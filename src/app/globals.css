@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+:root {
+  --navy: #111d33;
+  --navy-2: #1b2a45;
+  --ink: #182235;
+  --muted: #778297;
+  --line: #e8ebf0;
+  --canvas: #f5f6f8;
+  --green: #16865d;
+  --red: #c64e54;
+  --gold: #b78a35;
+}
+* { box-sizing: border-box; }
+html, body { min-height: 100%; }
+body { margin: 0; background: var(--canvas); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+::selection { background: #d9e6ff; }
+.panel { background: white; border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 1px 2px rgba(16,24,40,.025); }
+.field { width: 100%; border: 1px solid #dfe4ec; border-radius: 10px; background: white; padding: 10px 12px; color: var(--ink); outline: none; }
+.field:focus { border-color: #7189b4; box-shadow: 0 0 0 3px rgba(91,119,168,.13); }
+.btn-primary { display:inline-flex; align-items:center; justify-content:center; gap:8px; border-radius:10px; padding:10px 14px; background:var(--navy); color:white; font-size:13px; font-weight:600; transition:background .15s; }
+.btn-primary:hover { background:var(--navy-2); }
+.btn-secondary { display:inline-flex; align-items:center; justify-content:center; gap:8px; border:1px solid var(--line); border-radius:10px; padding:9px 13px; background:white; color:#344054; font-size:13px; font-weight:600; }
+.btn-secondary:hover { background:#f8fafc; }
+.eyebrow { color:var(--muted); font-size:11px; text-transform:uppercase; letter-spacing:.09em; font-weight:700; }
+.table-wrap { overflow-x:auto; }
+.data-table { width:100%; border-collapse:collapse; font-size:13px; }
+.data-table th { color:#7b8495; text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; padding:12px 16px; border-bottom:1px solid var(--line); white-space:nowrap; }
+.data-table td { padding:14px 16px; border-bottom:1px solid #f0f2f5; white-space:nowrap; }
+.data-table tr:last-child td { border-bottom:0; }
+@media (max-width: 768px) { .panel { border-radius:14px; } }
